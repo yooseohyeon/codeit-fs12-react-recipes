@@ -45,6 +45,11 @@ const App = () => {
     setTargetId(0);
   };
 
+  const handleCancel = () => {
+    SetNewIngredients("");
+    setTargetId(0);
+  };
+
   return (
     <div>
       <h1>레시피</h1>
@@ -67,7 +72,10 @@ const App = () => {
                   onChange={(e) => SetNewIngredients(e.target.value)}
                 ></input>
                 <button type="submit" onClick={() => handleAdd(recipe.id)}>
-                  제출
+                  추가
+                </button>
+                <button type="button" onClick={handleCancel}>
+                  취소
                 </button>
               </div>
             )}
