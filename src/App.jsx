@@ -19,6 +19,7 @@ const App = () => {
     },
   ]);
   const [newIngredient, SetNewIngredients] = useState("");
+  const [targetid, setTargetId] = useState(0);
 
   const handleAdd = (id) => {
     if (!newIngredient.trim()) return;
@@ -39,6 +40,9 @@ const App = () => {
         }
       }),
     );
+
+    SetNewIngredients("");
+    setTargetId(0);
   };
 
   return (
@@ -48,16 +52,25 @@ const App = () => {
         {recipes.map((recipe) => (
           <li key={recipe.id}>
             <h3>{recipe.name}</h3>
-            <input
-              type="text"
-              name="ingredient"
-              value={newIngredient}
-              placeholder="재료를 입력하세요."
-              onChange={(e) => SetNewIngredients(e.target.value)}
-            ></input>
-            <button type="submit" onClick={() => handleAdd(recipe.id)}>
-              제출
+
+            <button type="button" onClick={() => setTargetId(recipe.id)}>
+              재료 추가
             </button>
+
+            {recipe.id === targetid && (
+              <div>
+                <input
+                  type="text"
+                  name="ingredient"
+                  value={newIngredient}
+                  placeholder="재료를 입력하세요."
+                  onChange={(e) => SetNewIngredients(e.target.value)}
+                ></input>
+                <button type="submit" onClick={() => handleAdd(recipe.id)}>
+                  제출
+                </button>
+              </div>
+            )}
             <ul>
               {recipe.ingredients.map((ingredient, idx) => (
                 <li key={idx}>{ingredient}</li>
