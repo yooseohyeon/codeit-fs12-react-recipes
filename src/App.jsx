@@ -45,9 +45,8 @@ const App = () => {
     setTargetId(0);
   };
 
-  const handleCancel = () => {
-    SetNewIngredients("");
-    setTargetId(0);
+  const handleClick = (id) => {
+    id === targetid ? handleAdd(id) : setTargetId(id);
   };
 
   return (
@@ -58,27 +57,20 @@ const App = () => {
           <li key={recipe.id}>
             <h3>{recipe.name}</h3>
 
-            <button type="button" onClick={() => setTargetId(recipe.id)}>
-              재료 추가
+            {recipe.id === targetid && (
+              <input
+                type="text"
+                name="ingredient"
+                value={newIngredient}
+                placeholder="재료를 입력하세요."
+                onChange={(e) => SetNewIngredients(e.target.value)}
+              />
+            )}
+
+            <button type="button" onClick={() => handleClick(recipe.id)}>
+              {recipe.id === targetid ? "완료" : "재료 추가"}
             </button>
 
-            {recipe.id === targetid && (
-              <div>
-                <input
-                  type="text"
-                  name="ingredient"
-                  value={newIngredient}
-                  placeholder="재료를 입력하세요."
-                  onChange={(e) => SetNewIngredients(e.target.value)}
-                ></input>
-                <button type="submit" onClick={() => handleAdd(recipe.id)}>
-                  추가
-                </button>
-                <button type="button" onClick={handleCancel}>
-                  취소
-                </button>
-              </div>
-            )}
             <ul>
               {recipe.ingredients.map((ingredient, idx) => (
                 <li key={idx}>{ingredient}</li>
